@@ -1,0 +1,31 @@
+.card-header{
+	position: relative;
+}
+.cart-header-action{
+	right: 20px;
+    top: 0;
+    position: absolute;
+	height: 100%;
+	display: flex;
+    align-items: center;
+}
+.cart-header-action .btn{
+
+}
+.info-label{
+
+}
+.info-label:not(:first-child){
+	margin-left: 20px;
+}
+.info-label .material-icons{
+	font-size: 12px;
+	margin-right: 5px;
+}
+.info-label .material-icons,
+.info-value{
+	color: #6d6d6d;
+}
+.w100{width: 100px;}.w120{width: 120px;}.w150{width: 150px;}
+td, th{vertical-align: middle!important;}
+.center{text-align: center;}

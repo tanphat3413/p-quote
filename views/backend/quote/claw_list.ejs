@@ -1,0 +1,96 @@
+<%+ extend('backend/layout') %>
+
+
+<%+ section('main-content') %>
+<div class="col-md-12">
+	<div id="list">
+		<div class="card">
+			<div class="card-header" data-background-color="purple">
+				<h4 class="title">Get Quote</h4>
+				<p class="category">Please choise source </p>
+			</div>
+			<div class="card-content">
+				<form name="frm-claw" method="post" action="/quote/claw_list">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group label-floating">
+							<label class="control-label">Choise source</label>
+							<select class="form-control" name="source" id="source"> 
+								<% for(var i=0; i<listSource.length; i++) { var item=listSource[i]; %>
+									<option value="<%= item.id %>"><%= item.link %></option>
+								<% } %>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<button type="submit" class="btn btn-primary" id="btn-claw">Get</button>
+						<button type="button" class="btn btn-success" id="btn-import">Import</button>
+					</div>
+				</div>
+				</form>
+				<div>
+					<table class="table">
+						<thead>
+							<tr>
+								<th class="w100"></th>
+								<th>Quote</th>
+								<th class="w120">Author</th>
+							</tr>
+						</thead>
+						<tbody>
+						<% 	for(var i=0, total=quoteList.length; i<total; i++) { var item=quoteList[i];%>
+							<tr data-rid="<%= i %>" class="quote-row r-<%= i %>">
+								<td class="center">
+									<span class="rs<%= i %>"></span>
+									<input type="hidden" name="q<%= i %>" value="<%= item.quote %>" />
+									<input type="hidden" name="a<%= i %>" value="<%= item.author %>" />
+								</td>
+								<td><%= item.quote %></td>
+								<td><%= item.author %> </td>
+							</tr>
+						<% } %>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<%+ endSection %>
+
+
+<%+ section('body-footer') %>
+<script>
+$(function(){
+	console.log('abc');
+	$('#btn-import').click(function(){
+
+		if($('.quote-row').length == 0){
+			return;
+		}
+		$('.quote-row').each(function(){
+			var row = $(this),
+				id = row.data('rid'),				
+				quote = $('input[name="q'+id+'"]').val(),
+				author = $('input[name="a'+id+'"]').val();
+				if(quote != ''){
+					$.ajax({
+						url: '/quote/form',
+						type: 'post',
+						data: {quote:quote, author:author},
+						dataType: 'json',
+						success: function(res){
+
+							if(res.isSuccess){
+								$('.rs'+id).addClass('label label-success').html('OK');
+							} else {
+								$('.rs'+id).addClass('label label-warning').html('FAIL');
+							}
+						}
+					});
+				}
+		});
+	});
+});
+</script>	
+<%+ endSection %>

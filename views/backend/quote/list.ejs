@@ -1,0 +1,157 @@
+<%+ extend('backend/layout') %>
+
+<%+ section('head-append') %>
+<link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet" />
+<style>
+	.p-quote{ font-family: 'Courgette', cursive, 'Open sans';}
+</style>
+<%+ endSection %>
+
+<%+ section('main-content') %>
+<div class="col-md-12">
+	<div id="list">
+		<div class="card">
+
+			<div class="card-header" data-background-color="green">
+				<h4 class="title">Quote List</h4>
+				<p class="category">Current total: <span class="total-quote"><%= totalQuotes %></span></p>
+				<div class="cart-header-action">
+					<button type="button" class="btn btn-sm btn-info" id="btn-add">Add Quote</button>
+					<a href="/quote/claw_list" class="btn btn-sm btn-primary mg-l-md" >Import by link</a>
+				</div>
+			</div>
+
+			<div class="card-content table-responsive">
+				<table class="table">					
+					<tbody id="_list_comp">
+										
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+	</div>
+	<div id="form" class="hidden animate">
+		<div class="card">
+
+			<div class="card-header" data-background-color="purple">
+				<h4 class="title">Add Quote</h4>
+				<p class="category">Happy work</p>
+			</div>
+
+			<div class="card-content">
+				<form id="form-quote" name="form-quote" method="POST" action="/quote/form" >							
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label>Content</label>
+								<div class="form-group label-floating">											
+									<textarea class="form-control" name="quote" id="quote" rows="5"></textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-5">
+							<div class="form-group label-floating">
+								<label class="control-label">Author</label>
+								<input type="text" class="form-control" name="author" id="author" /> 
+							</div>
+						</div>
+						<div class="col-md-7">
+							<input type="hidden" name="action" id="action" value="insert" />
+							<input type="hidden" name="id" id="id" value="" />
+							<button type="button" class="btn btn-default pull-right" id="btn-cancel">Cancel</button>
+							<button type="submit" class="btn btn-primary pull-right">Save Quote</button>
+						</div>
+					</div>
+					
+					
+					<div class="clearfix"></div>
+
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>		
+<%+ endSection %>
+
+<%+ section('body-footer') %>
+	<script>
+	function get_list(){
+		$.ajax({
+			url: '/quote/list_comp',
+			type: 'get',
+			data: {},
+			dataType: 'html',
+			success: function(htmlStr){
+				$('#_list_comp').html(htmlStr);				
+			}
+		});
+	}
+	function action(type, id){
+		switch(type){
+			case 'edit':
+				$.ajax({
+					url: '/quote/get_quote',
+					type: 'get',
+					dataType: 'json',
+					data: {id: id},
+					success: function(res){
+						if(res.isSuccess){
+							$('#quote').text(res.data.quote).parent().removeClass('is-empty');
+							$('#author').val(res.data.author).parent().removeClass('is-empty');
+							$('#action').val('update');
+							$('#id').val(id);
+							show_form();
+						}						
+					}
+				});
+				break;
+			case 'delete':$
+			
+				break;
+		}
+	}
+	function show_form(){
+		$('#list').addClass('hidden');
+		$('#form').removeClass('hidden');
+	}
+	function hide_form(){
+		$('#form-quote')[0].reset();
+		$('#form').addClass('hidden');
+		$('#list').removeClass('hidden');		
+	}
+	$(function(){
+
+		get_list();
+
+		$('#btn-add').click(function(){
+			show_form();
+		});
+
+		$('#btn-cancel').click(function(){
+			hide_form();
+		});
+
+		$('#form-quote').submit(function(e){
+			e.preventDefault();
+			if($('#quote').val() == ''){
+				$('#quote').focus();
+				return;
+			}
+			$.ajax({
+				url: '/quote/form',
+				type: 'post',
+				data: $(this).serialize(),
+				dataType: 'json',
+				success: function(res){
+					console.log(res);
+				}
+			});
+		});
+	});
+	</script>
+<%+ endSection %>
+

@@ -1,0 +1,29 @@
+<% if (list.length==0) { %>
+	<tr>
+		<td colspan="2">
+			-- No data found --
+		</td>
+	</tr>
+<% } else { %>
+	<% for(var i=0; i<list.length; i++) { var item=list[i]; %>
+
+		<tr class="dr_<%= item.id %>">
+			<td>
+				<p class="p-quote"><%= item.quote %></p>
+				<p class="p-info">
+					<span class="info-label"><i class="material-icons">border_color</i> </span> <span class="info-value"><%= item.author %> </span>
+					<span class="info-label"><i class="material-icons">date_range</i> </span> <span class="info-value"><%=  moment(item.dateCreate).format( 'MMM-DD-YYYY')  %> </span>
+				</p>
+			</td>
+			
+			<td class="td-actions text-center">								
+				<button type="button" data-id="<%=item.id %>" onclick="action('edit', '<%=item.id %>');" rel="tooltip" title="Edit Quote" class="editQuote btn btn-success btn-simple btn-xs">
+					<i class="fa fa-edit"></i>
+				</button>
+				<button type="button" data-id="<%=item.id %>" onclick="action('delete', '<%=item.id %>');" rel="tooltip" title="Remove" class="deleteQuote btn btn-danger btn-simple btn-xs">
+					<i class="fa fa-times"></i>
+				</button>
+			</td>
+		</tr>
+	<% } %>
+<% } %>

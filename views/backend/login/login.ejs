@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>
+		<%= title %>
+	</title>
+	<link rel="stylesheet" href="/backend/css/login.css">
+</head>
+
+<body>
+	<div class="login-page">
+		<h3>Login Panel</h3>
+		<div class="form">
+			<form class="login-form">
+				<div>
+					<input type="text" name="email" id="email" placeholder="login email" />
+				</div>
+				<div>
+					<input type="password" name="password" id="password" placeholder="password" />
+				</div>
+				<button type="submit" id="btn-submit">login</button>
+				<p class="message">Forgot password? <a href="#">Reset here</a></p>
+			</form>
+		</div>
+	</div>
+	<script src="/backend/js/jquery-3.1.0.min.js"></script>
+	<script>
+		$(function () {
+			$('form.login-form').submit(function (e) {
+				e.preventDefault();
+				$('#btn-submit').prop('disabled', true).html('Vui lòng chờ');
+				$('.has-error').removeClass('has-error');
+				$('.valid-message').remove();
+
+				$.ajax({
+					url: '/login',
+					type: 'post',
+					dataType: 'json',
+					data: $(this).serialize(),
+					success: function (res) {
+						if (res.isSuccess) {
+							window.location = '/quote';
+						} else {
+
+							for (var i = 0, len = res.data.length; i < len; i++) {
+								var field = res.data[i].field,
+									message = res.data[i].error;
+								$('#'+field).parent().addClass('has-error').append('<p class="valid-message">'+ message + '</p>');								
+								$('#'+field).focus(function(){
+									if($(this).parent().hasClass('has-error')){
+										$(this).parent().removeClass('has-error').find('.valid-message').remove();
+									}
+								});
+							}
+						}
+					},
+					complete: function () {
+						$('#btn-submit').prop('disabled', false).html('login');
+					}
+				})
+			});
+		})
+	</script>
+</body>
+
+</html>
