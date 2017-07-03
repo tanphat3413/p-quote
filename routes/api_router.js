@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-var quoteController = require(__rootPath + '/controllers/quote_controller');
+var apiController = require(__rootPath + '/controllers/api_controller');
 /* BEGIN */
-router.get('/quote', quoteController.get_quote);
+router.get('/quote', apiController.quote);
 
 /* END */
 module.exports = router;

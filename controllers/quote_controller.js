@@ -72,32 +72,8 @@ exports.get_quote = (req, res) => {
 				var quote = snapshot.val() ?  snapshot.val() : {};	
 				resolve(quote);
 			});
-
 		} else {
-			//get max id
-			db.ref(fn.jup(refTable.refQuotes)).orderByKey().limitToLast(1).once('value')
-			.then((snapMax) => {
-				var max = _.first(_.sortBy(snapMax.val())).id;
-
-				db.ref(fn.jup(refTable.refQuotes)).orderByKey().limitToFirst(1).once('value')
-				.then((snapMin) => {
-					var min = _.first(_.sortBy(snapMin.val())).id;				
-
-					var randID = Math.floor((Math.random() * (max-min)) + min);
-					//console.log(min, max, randID);
-					var ref = db.ref(fn.jup(refTable.refQuotes, id)).orderByChild('id');
-					if(Date.now() % 2 == 0){
-						ref = ref.startAt(randID);
-					} else {
-						ref = ref.endAt(randID);
-					}
-					ref.limitToFirst(1).once('value')
-						.then((snapshot) =>{
-							var quote =  _.first(_.sortBy(snapshot.val()));
-							resolve(quote);
-						});
-				});
-			});
+			resolve({});
 		}
 	})
 	.then((quote) => {
