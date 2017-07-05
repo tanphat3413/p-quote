@@ -11,22 +11,30 @@
 			</div>
 			<div class="card-content">
 				<form name="frm-claw" method="post" action="/quote/claw_list">
-				<div class="row">
-					<div class="col-md-6">
-						<div class="form-group label-floating">
-							<label class="control-label">Choise source</label>
-							<select class="form-control" name="source" id="source"> 
-								<% for(var i=0; i<listSource.length; i++) { var item=listSource[i]; %>
-									<option value="<%= item.id %>"><%= item.link %></option>
-								<% } %>
-							</select>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group label-floating">
+								<label class="control-label">Choise source</label>
+								<select class="form-control" name="source" id="source"> 
+									<% for(var i=0; i<listSource.length; i++) { var item=listSource[i]; %>
+										<option value="<%= item.id %>"><%= item.link %></option>
+									<% } %>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group label-floating">
+								<label class="control-label">Parameters</label>
+								<input type="text" class="form-control" name="params" id="params" />
+							</div>
 						</div>
 					</div>
-					<div class="col-md-4">
-						<button type="submit" class="btn btn-primary" id="btn-claw">Get</button>
-						<button type="button" class="btn btn-success" id="btn-import">Import</button>
+					<div class="row">
+						<div class="col-md-6">
+							<button type="submit" class="btn btn-primary" id="btn-claw">Get</button>
+							<button type="button" class="btn btn-success" id="btn-import">Import</button>
+						</div>
 					</div>
-				</div>
 				</form>
 				<div>
 					<table class="table">
@@ -62,7 +70,7 @@
 <%+ section('body-footer') %>
 <script>
 $(function(){
-	console.log('abc');
+	
 	$('#btn-import').click(function(){
 
 		if($('.quote-row').length == 0){

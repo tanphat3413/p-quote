@@ -41,9 +41,11 @@ exports.quote = ((req, res) => {
 				} else {
 					ref = ref.endAt(randID);
 				}
+				
 				ref.limitToFirst(1).once('value')
 					.then((snapshot) =>{
 						var quote =  _.first(_.sortBy(snapshot.val()));
+						quote = _.extend({}, quote, { randID: randID, maxID: max, minID: min});
 						resolve(quote);
 					});
 			});

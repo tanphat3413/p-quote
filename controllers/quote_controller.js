@@ -137,7 +137,8 @@ exports.claw_list = (req, res) =>{
 	}
 
 	var source = fn.element(req.body, 'source', '');
-	var link = get_link_claw(source);
+	var params = fn.element(req.body, 'params', '');
+	var link = get_link_claw(source) + '?' + params;
 	var quoteList = [];
 
 	new Promise((resolve, reject) => {
