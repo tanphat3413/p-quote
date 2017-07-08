@@ -35,13 +35,14 @@ exports.quote = ((req, res) => {
 
 				var randID = Math.floor((Math.random() * (max-min)) + min);
 				//console.log(min, max, randID);
-				var ref = db.ref(fn.jup(refTable.refQuotes)).orderByChild('id');
+				var ref = db.ref(fn.jup(refTable.refQuotes)).orderByChild('id').startAt(randID);
+				/*
 				if(Date.now() % 2 == 0){
 					ref = ref.startAt(randID);
 				} else {
 					ref = ref.endAt(randID);
 				}
-				
+				*/
 				ref.limitToFirst(1).once('value')
 					.then((snapshot) =>{
 						var quote =  _.first(_.sortBy(snapshot.val()));
