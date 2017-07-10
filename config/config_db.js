@@ -30,5 +30,6 @@ exports.auth = firebase.auth();
 
 exports.refTable = {
 	refQuotes: 'quotes',
+	refQuoteIDs: 'quote_ids',
 	refUsers: 'users'
 };

@@ -42,6 +42,7 @@
 					success: function (res) {
 						if (res.isSuccess) {
 							window.location = '/quote';
+
 						} else {
 
 							for (var i = 0, len = res.data.length; i < len; i++) {
@@ -56,8 +57,10 @@
 							}
 						}
 					},
-					complete: function () {
-						$('#btn-submit').prop('disabled', false).html('login');
+					complete: function (jqXHR, textStatus) {
+						if(textStatus.toLocaleLowerCase() != 'success'){
+							$('#btn-submit').prop('disabled', false).html('login');
+						}
 					}
 				})
 			});

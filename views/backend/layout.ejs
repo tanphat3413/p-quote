@@ -9,14 +9,13 @@
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
-    <!-- Bootstrap core CSS     -->
     <link href="/backend/css/bootstrap.min.css" rel="stylesheet" />
 
-    <!--  Material Dashboard CSS    -->
     <link href="/backend/css/material-dashboard.css" rel="stylesheet"/>
+	<link href="/backend/css/toolkit.css" rel="stylesheet"/>
+	
 	<link href="/backend/css/style.css" rel="stylesheet"/>
 
-    <!--     Fonts and icons     -->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet"/>
     <link href="//fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons" rel="stylesheet" type="text/css"/>
 
@@ -72,15 +71,11 @@
 							<li class="dropdown">
 								  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 										<i class="material-icons">notifications</i>
-										<span class="notification">5</span>
+										<span class="notification">1</span>
 										<p class="hidden-lg hidden-md">Notifications</p>
 								  </a>
-								  <ul class="dropdown-menu">
-									<li><a href="#">Mike John responded to your email</a></li>
-									<li><a href="#">You have 5 new tasks</a></li>
-									<li><a href="#">You're now friend with Andrew</a></li>
-									<li><a href="#">Another Notification</a></li>
-									<li><a href="#">Another One</a></li>
+								  <ul class="dropdown-menu">									
+									<li><a href="#">No notification to notification</a></li>
 								  </ul>
 							</li>
 							<li>
@@ -129,16 +124,14 @@
 	    </div>
 	</div>
 
-	<!--   Core JS Files   -->
 	<script src="/backend/js/jquery-3.1.0.min.js" type="text/javascript"></script>
 	<script src="/backend/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="/backend/js/material.min.js" type="text/javascript"></script>
 	
-	<!--  Notifications Plugin    -->
 	<script src="/backend/js/bootstrap-notify.js"></script>	
 
-	<!-- Material Dashboard javascript methods -->
 	<script src="/backend/js/material-dashboard.js"></script>
+	<script src="/backend/js/process.js"></script>
 
 	<%+ yield('body-footer') %>
 

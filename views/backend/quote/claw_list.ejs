@@ -33,6 +33,7 @@
 						<div class="col-md-6">
 							<button type="submit" class="btn btn-primary" id="btn-claw">Get</button>
 							<button type="button" class="btn btn-success" id="btn-import">Import</button>
+							<a class="btn btn-default pull-right" href="/quote">Cancel</a>
 						</div>
 					</div>
 				</form>
@@ -49,7 +50,9 @@
 						<% 	for(var i=0, total=quoteList.length; i<total; i++) { var item=quoteList[i];%>
 							<tr data-rid="<%= i %>" class="quote-row r-<%= i %>">
 								<td class="center">
-									<span class="rs<%= i %>"></span>
+									<span class="rs<%= i %>">
+										<button  type="button" class="btn btn-xs btn-warning" onclick="delete_row('<%= i %>')">Remove</button>
+									</span>
 									<input type="hidden" name="q<%= i %>" value="<%= item.quote %>" />
 									<input type="hidden" name="a<%= i %>" value="<%= item.author %>" />
 								</td>
@@ -69,8 +72,14 @@
 
 <%+ section('body-footer') %>
 <script>
+function delete_row(rowID){
+	confirmModal('Delete confirm', 'Are you sure?', Date.now(), function(){
+		$('tr.r-'+rowID).fadeOut('fast', function(){$(this).remove();});
+	});		
+}
+
 $(function(){
-	
+
 	$('#btn-import').click(function(){
 
 		if($('.quote-row').length == 0){
@@ -88,7 +97,6 @@ $(function(){
 						data: {quote:quote, author:author},
 						dataType: 'json',
 						success: function(res){
-
 							if(res.isSuccess){
 								$('.rs'+id).addClass('label label-success').html('OK');
 							} else {
