@@ -85,26 +85,19 @@ exports.createLogin = (req, res) => {
 
 	} else {
 
-		fbAuth.signInWithEmailAndPassword(model.fbAuthUser, model.fbAuthKey)
-			.then(function (rs) {
-
-				fn.hashString(password)
-				.then((hashPass) => {
-					var userRef = db.ref(refTable.refUsers);
-					userRef.push().set({
-						email: loginEmail,
-						password: hashPass
-					});
-					res.json(fn.jsonResult(true, 'OK'));
-				})
-				.catch((err) => {
-					console.log(err);
-					res.json(fn.jsonResult(false, 'ERROR', err));
-				});
-			})
-			.catch((err) => {
-				console.log(err);
-				res.json(fn.jsonResult(false, 'ERROR', err));
+		fn.hashString(password)
+		.then((hashPass) => {
+			var userRef = db.ref(refTable.refUsers);
+			userRef.push().set({
+				email: loginEmail,
+				password: hashPass,
+				fullname: 'Administrator'
 			});
+			res.json(fn.jsonResult(true, 'OK'));
+		})
+		.catch((err) => {
+			console.log(err);
+			res.json(fn.jsonResult(false, 'ERROR', err));
+		});			
 	}
 }

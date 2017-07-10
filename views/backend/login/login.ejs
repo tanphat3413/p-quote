@@ -55,11 +55,13 @@
 									}
 								});
 							}
+							$('#btn-submit').html('login');
 						}
 					},
 					complete: function (jqXHR, textStatus) {
+						$('#btn-submit').prop('disabled', false);
 						if(textStatus.toLocaleLowerCase() != 'success'){
-							$('#btn-submit').prop('disabled', false).html('login');
+							$('#btn-submit').html('login');
 						}
 					}
 				})
